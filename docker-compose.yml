@@ -34,13 +34,16 @@ services:
       - db
       - wordpress
     image: node:8.15
+    links:
+      - wordpress
     volumes:
       - ./app:/var/www/app
       - /var/www/app/node_modules
     working_dir: "/var/www/app"
     restart: always
     environment:
-      - HOST=0.0.0.0
+      HOST: 0.0.0.0
+      WORDPRESS_API: wordpress
     ports:
       - "3000:3000"
     command: bash -c "npm install && npm run dev"

@@ -3,7 +3,7 @@
     <div>
       <logo />
       <h1 class="title">
-        app
+        Nuxt Wordpress
       </h1>
       <h2 class="subtitle">
         My scrumtrulescent Nuxt.js project
@@ -19,6 +19,9 @@
           >GitHub</a
         >
       </div>
+      <section>
+        記事一覧http://[domain]/wp-json/wp/v2/posts/?_embed
+      </section>
     </div>
   </section>
 </template>
@@ -29,6 +32,17 @@ import Logo from '~/components/Logo.vue'
 export default {
   components: {
     Logo
+  },
+  async asyncData({ $axios }) {
+    try {
+      console.log(`${process.env.WORDPRESS_API}/wp-json/wp/v2/posts/?_embed`)
+      const { data } = await $axios.get(
+        `${process.env.WORDPRESS_API}/wp-json/wp/v2/posts/?_embed`
+      )
+      return { data }
+    } catch (error) {
+      throw error
+    }
   }
 }
 </script>
